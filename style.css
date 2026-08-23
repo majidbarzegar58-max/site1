@@ -1,153 +1,874 @@
-const SUPABASE_URL = "https://jqieckvydpwyitearyfg.supabase.co";
-const SUPABASE_KEY = "sb_publishable_wz7DIMoz1lySeDUZyLb5Aw_Yc-WAxFJ";
+/* ================================
+   Messenger Modern UI
+   ================================ */
 
-// مقداردهی صحیح کلاینت Supabase
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-let currentUser = null;
-let activeFriend = null;
+:root {
+  --bg: #080b14;
+  --panel: rgba(18, 23, 38, 0.88);
+  --panel-light: rgba(31, 38, 59, 0.75);
+  --border: rgba(255, 255, 255, 0.08);
 
-// ۱. سیستم ثبت‌نام و ورود
-async function signUp() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  const username = document.getElementById("username").value;
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --primary-light: #818cf8;
 
-  if (!email || !password || !username) {
-    return alert("لطفاً تمام فیلدها را پر کنید!");
+  --text: #f8fafc;
+  --text-secondary: #94a3b8;
+  --danger: #ef4444;
+
+  --sent: linear-gradient(135deg, #6366f1, #8b5cf6);
+  --received: #1e293b;
+}
+
+body {
+  font-family:
+    "Segoe UI",
+    Tahoma,
+    Arial,
+    sans-serif;
+
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.18), transparent 30%),
+    radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.15), transparent 30%),
+    var(--bg);
+
+  color: var(--text);
+  direction: rtl;
+}
+
+/* ================================
+   General
+   ================================ */
+
+button,
+input {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ================================
+   Login / Register
+   ================================ */
+
+#auth-container {
+  width: 420px;
+  max-width: calc(100% - 30px);
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  padding: 38px;
+
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  border: 1px solid var(--border);
+  border-radius: 24px;
+
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.45),
+    0 0 60px rgba(99, 102, 241, 0.08);
+
+  text-align: center;
+
+  animation: authAppear 0.6s ease;
+}
+
+#auth-container::before {
+  content: "💬";
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 72px;
+  height: 72px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 22px;
+
+  font-size: 34px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.25),
+    rgba(139, 92, 246, 0.25)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  box-shadow:
+    0 10px 35px rgba(99, 102, 241, 0.2);
+}
+
+#auth-container h2 {
+  font-size: 26px;
+  margin-bottom: 28px;
+  font-weight: 700;
+}
+
+#auth-container input {
+  width: 100%;
+  height: 52px;
+
+  margin-bottom: 14px;
+  padding: 0 18px;
+
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  outline: none;
+
+  background: rgba(255, 255, 255, 0.045);
+
+  color: white;
+
+  font-size: 14px;
+
+  transition: 0.25s;
+}
+
+#auth-container input::placeholder {
+  color: #64748b;
+}
+
+#auth-container input:focus {
+  border-color: var(--primary);
+  background: rgba(99, 102, 241, 0.08);
+
+  box-shadow:
+    0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+#auth-container button {
+  width: 100%;
+  height: 50px;
+
+  margin-top: 8px;
+
+  border-radius: 14px;
+
+  background: var(--sent);
+
+  color: white;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  transition: 0.25s;
+
+  box-shadow:
+    0 8px 25px rgba(99, 102, 241, 0.25);
+}
+
+#auth-container button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 30px rgba(99, 102, 241, 0.35);
+}
+
+#auth-container button:active {
+  transform: scale(0.98);
+}
+
+/* ================================
+   Main App
+   ================================ */
+
+#app-container {
+  width: min(1400px, 96vw);
+  height: 92vh;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  display: flex;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border);
+  border-radius: 26px;
+
+  background: rgba(10, 15, 28, 0.88);
+
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+
+  box-shadow:
+    0 30px 100px rgba(0, 0, 0, 0.55),
+    0 0 80px rgba(99, 102, 241, 0.06);
+
+  animation: appAppear 0.6s ease;
+}
+
+/* ================================
+   Sidebar
+   ================================ */
+
+.sidebar {
+  width: 340px;
+  min-width: 340px;
+
+  display: flex;
+  flex-direction: column;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(20, 27, 45, 0.95),
+      rgba(13, 18, 31, 0.95)
+    );
+
+  border-left: 1px solid var(--border);
+}
+
+/* User info */
+
+.user-info {
+  min-height: 82px;
+
+  padding: 18px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.user-info::before {
+  content: "👤";
+
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: linear-gradient(
+    135deg,
+    #6366f1,
+    #8b5cf6
+  );
+
+  font-size: 20px;
+}
+
+#current-username {
+  flex: 1;
+
+  margin-right: 12px;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-info button {
+  padding: 9px 13px;
+
+  border-radius: 10px;
+
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+
+  font-size: 12px;
+
+  transition: 0.2s;
+}
+
+.user-info button:hover {
+  background: rgba(239, 68, 68, 0.18);
+  transform: translateY(-1px);
+}
+
+/* ================================
+   Add Friend
+   ================================ */
+
+.add-friend {
+  padding: 18px;
+
+  display: flex;
+  gap: 8px;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.add-friend input {
+  flex: 1;
+
+  min-width: 0;
+  height: 44px;
+
+  padding: 0 13px;
+
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  outline: none;
+
+  background: rgba(255, 255, 255, 0.045);
+
+  color: white;
+
+  transition: 0.25s;
+}
+
+.add-friend input:focus {
+  border-color: var(--primary);
+}
+
+.add-friend input::placeholder {
+  color: #64748b;
+}
+
+.add-friend button {
+  padding: 0 16px;
+
+  border-radius: 12px;
+
+  background: var(--primary);
+
+  color: white;
+
+  font-weight: 700;
+
+  transition: 0.2s;
+}
+
+.add-friend button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+/* ================================
+   Friends
+   ================================ */
+
+.sidebar h3 {
+  padding: 18px 20px 10px;
+
+  color: var(--text-secondary);
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+#friends-list {
+  list-style: none;
+
+  padding: 5px 10px;
+
+  overflow-y: auto;
+}
+
+#friends-list::-webkit-scrollbar,
+#messages-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+#friends-list::-webkit-scrollbar-thumb,
+#messages-list::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 20px;
+}
+
+#friends-list li {
+  position: relative;
+
+  margin-bottom: 5px;
+  padding: 14px 14px 14px 14px;
+
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  color: #e2e8f0;
+
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+
+#friends-list li::before {
+  content: "👤";
+
+  display: inline-flex;
+
+  width: 38px;
+  height: 38px;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-left: 10px;
+
+  vertical-align: middle;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(99, 102, 241, 0.3),
+      rgba(139, 92, 246, 0.3)
+    );
+
+  font-size: 17px;
+}
+
+#friends-list li:hover {
+  background: rgba(99, 102, 241, 0.1);
+
+  transform: translateX(-3px);
+}
+
+/* ================================
+   Chat Area
+   ================================ */
+
+.chat-area {
+  flex: 1;
+
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+
+  background:
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(99, 102, 241, 0.07),
+      transparent 30%
+    ),
+    #0b1020;
+}
+
+/* Chat header */
+
+#chat-header {
+  min-height: 76px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 25px;
+
+  border-bottom: 1px solid var(--border);
+
+  background: rgba(15, 23, 42, 0.65);
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+#chat-header::before {
+  content: "👤";
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-left: 12px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #6366f1,
+      #8b5cf6
+    );
+
+  font-size: 18px;
+}
+
+/* ================================
+   Messages
+   ================================ */
+
+#messages-list {
+  flex: 1;
+
+  padding: 28px;
+
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+/* Message bubble */
+
+.msg {
+  max-width: min(70%, 520px);
+
+  padding: 11px 15px;
+
+  border-radius: 18px;
+
+  line-height: 1.7;
+
+  font-size: 14px;
+
+  word-wrap: break-word;
+
+  animation: messageAppear 0.25s ease;
+}
+
+/* Sent */
+
+.msg.sent {
+  align-self: flex-start;
+
+  background: var(--sent);
+
+  color: white;
+
+  border-bottom-left-radius: 5px;
+
+  box-shadow:
+    0 6px 20px rgba(99, 102, 241, 0.18);
+}
+
+/* Received */
+
+.msg.received {
+  align-self: flex-end;
+
+  background: var(--received);
+
+  color: #e2e8f0;
+
+  border-bottom-right-radius: 5px;
+
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ================================
+   Message Input
+   ================================ */
+
+.message-input {
+  display: flex;
+
+  gap: 10px;
+
+  padding: 16px 20px;
+
+  border-top: 1px solid var(--border);
+
+  background:
+    rgba(15, 23, 42, 0.8);
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+.message-input input {
+  flex: 1;
+
+  min-width: 0;
+
+  height: 50px;
+
+  padding: 0 18px;
+
+  border: 1px solid var(--border);
+  border-radius: 15px;
+
+  outline: none;
+
+  background: rgba(255, 255, 255, 0.05);
+
+  color: white;
+
+  font-size: 14px;
+
+  transition: 0.25s;
+}
+
+.message-input input::placeholder {
+  color: #64748b;
+}
+
+.message-input input:focus {
+  border-color: var(--primary);
+
+  box-shadow:
+    0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.message-input button {
+  width: 90px;
+
+  border-radius: 15px;
+
+  background: var(--sent);
+
+  color: white;
+
+  font-weight: 700;
+
+  transition: 0.2s;
+
+  box-shadow:
+    0 7px 20px rgba(99, 102, 241, 0.2);
+}
+
+.message-input button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 25px rgba(99, 102, 241, 0.3);
+}
+
+.message-input button:active {
+  transform: scale(0.97);
+}
+
+/* ================================
+   Animations
+   ================================ */
+
+@keyframes authAppear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%) scale(0.96);
   }
 
-  try {
-    const { data, error } = await supabaseClient.auth.signUp({ email, password });
-    if (error) return alert("خطا در ثبت‌نام: " + error.message);
-
-    if (data.user) {
-      const { error: profileError } = await supabaseClient.from("profiles").insert([{ id: data.user.id, username }]);
-      if (profileError) console.error("Profile Error:", profileError);
-      alert("ثبت‌نام با موفقیت انجام شد! حالا دکمه ورود را بزنید.");
-    }
-  } catch (err) {
-    alert("خطای ناشناخته: " + err.message);
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
-async function signIn() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  if (!email || !password) {
-    return alert("لطفاً ایمیل و رمز عبور را وارد کنید!");
+@keyframes appAppear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.98);
   }
 
-  const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-  if (error) return alert("خطا در ورود: " + error.message);
-
-  currentUser = data.user;
-  initApp();
-}
-
-async function signOut() {
-  await supabaseClient.auth.signOut();
-  location.reload();
-}
-
-// ۲. مقداردهی اولیه برنامه
-async function initApp() {
-  document.getElementById("auth-container").classList.add("hidden");
-  document.getElementById("app-container").classList.remove("hidden");
-
-  const { data: profile } = await supabaseClient.from("profiles").select("username").eq("id", currentUser.id).single();
-  if (profile) {
-    document.getElementById("current-username").innerText = profile.username;
-  }
-
-  loadFriends();
-  listenToMessages();
-}
-
-// ۳. مدیریت دوستان
-async function sendFriendRequest() {
-  const friendUsername = document.getElementById("friend-username").value;
-  if (!friendUsername) return alert("نام کاربری دوست را وارد کنید!");
-
-  const { data: targetUser } = await supabaseClient.from("profiles").select("id").eq("username", friendUsername).single();
-
-  if (!targetUser) return alert("کاربری با این نام یافت نشد!");
-  if (targetUser.id === currentUser.id) return alert("نمی‌توانید به خودتان درخواست دهید!");
-
-  await supabaseClient.from("friend_requests").insert([
-    { sender_id: currentUser.id, receiver_id: targetUser.id, status: "accepted" }
-  ]);
-  
-  alert("دوست با موفقیت اضافه شد!");
-  document.getElementById("friend-username").value = "";
-  loadFriends();
-}
-
-async function loadFriends() {
-  const { data: profiles } = await supabaseClient.from("profiles").select("*");
-  const list = document.getElementById("friends-list");
-  list.innerHTML = "";
-  
-  if (profiles) {
-    profiles.forEach(p => {
-      if (p.id !== currentUser.id) {
-        const li = document.createElement("li");
-        li.innerText = p.username;
-        li.onclick = () => selectFriend(p);
-        list.appendChild(li);
-      }
-    });
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
-function selectFriend(friend) {
-  activeFriend = friend;
-  document.getElementById("chat-header").innerText = `چت با ${friend.username}`;
-  document.getElementById("input-box").classList.remove("hidden");
-  loadMessages();
-}
-
-// ۴. چت و ارسال پیام
-async function sendMessage() {
-  const textInput = document.getElementById("message-text");
-  const content = textInput.value;
-  if (!content || !activeFriend) return;
-
-  await supabaseClient.from("messages").insert([
-    { sender_id: currentUser.id, receiver_id: activeFriend.id, content }
-  ]);
-
-  textInput.value = "";
-}
-
-async function loadMessages() {
-  if (!activeFriend) return;
-  const { data: msgs } = await supabaseClient.from("messages")
-    .select("*")
-    .or(`and(sender_id.eq.${currentUser.id},receiver_id.eq.${activeFriend.id}),and(sender_id.eq.${activeFriend.id},receiver_id.eq.${currentUser.id})`)
-    .order("created_at", { ascending: true });
-
-  const list = document.getElementById("messages-list");
-  list.innerHTML = "";
-  if (msgs) {
-    msgs.forEach(m => {
-      const div = document.createElement("div");
-      div.className = `msg ${m.sender_id === currentUser.id ? 'sent' : 'received'}`;
-      div.innerText = m.content;
-      list.appendChild(div);
-    });
+@keyframes messageAppear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
   }
-  list.scrollTop = list.scrollHeight;
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-// ۵. دریافت آنلاین پیام‌ها (Realtime)
-function listenToMessages() {
-  supabaseClient.channel("public:messages")
-    .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages" }, payload => {
-      if (activeFriend && (payload.new.sender_id === activeFriend.id || payload.new.sender_id === currentUser.id)) {
-        loadMessages();
-      }
-    })
-    .subscribe();
+/* ================================
+   Mobile
+   ================================ */
+
+@media (max-width: 800px) {
+
+  #app-container {
+    width: 100%;
+    height: 100vh;
+
+    top: 0;
+    left: 0;
+
+    transform: none;
+
+    border-radius: 0;
+
+    border: none;
+  }
+
+  .sidebar {
+    width: 90px;
+    min-width: 90px;
+  }
+
+  .user-info {
+    padding: 15px 10px;
+
+    justify-content: center;
+  }
+
+  .user-info::before {
+    width: 45px;
+    height: 45px;
+  }
+
+  #current-username {
+    display: none;
+  }
+
+  .user-info button {
+    display: none;
+  }
+
+  .add-friend {
+    padding: 10px;
+
+    flex-direction: column;
+  }
+
+  .add-friend input {
+    width: 100%;
+    font-size: 10px;
+  }
+
+  .add-friend button {
+    height: 35px;
+    padding: 0;
+
+    font-size: 11px;
+  }
+
+  .sidebar h3 {
+    display: none;
+  }
+
+  #friends-list {
+    padding: 5px;
+  }
+
+  #friends-list li {
+    height: 55px;
+
+    padding: 8px;
+
+    font-size: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #friends-list li::before {
+    margin: 0;
+
+    width: 40px;
+    height: 40px;
+  }
+
+  #chat-header {
+    min-height: 65px;
+
+    padding: 0 15px;
+
+    font-size: 14px;
+  }
+
+  #chat-header::before {
+    width: 38px;
+    height: 38px;
+
+    margin-left: 9px;
+  }
+
+  #messages-list {
+    padding: 18px 12px;
+  }
+
+  .msg {
+    max-width: 82%;
+
+    font-size: 13px;
+  }
+
+  .message-input {
+    padding: 10px;
+  }
+
+  .message-input input {
+    height: 46px;
+  }
+
+  .message-input button {
+    width: 65px;
+  }
+}
+
+/* ================================
+   Small Phones
+   ================================ */
+
+@media (max-width: 450px) {
+
+  #auth-container {
+    padding: 28px 20px;
+  }
+
+  #auth-container h2 {
+    font-size: 22px;
+  }
+
+  .sidebar {
+    width: 72px;
+    min-width: 72px;
+  }
+
+  .add-friend input {
+    display: none;
+  }
+
+  .add-friend button {
+    font-size: 0;
+  }
+
+  .add-friend button::after {
+    content: "+";
+
+    font-size: 22px;
+  }
+
+  .msg {
+    max-width: 88%;
+  }
 }

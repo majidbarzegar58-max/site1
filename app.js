@@ -1,7 +1,7 @@
 const SUPABASE_URL = "https://jqieckvydpwyitearyfg.supabase.co";
 const SUPABASE_KEY = "sb_publishable_wz7DIMoz1lySeDUZyLb5Aw_Yc-WAxFJ";
 
-// مقداردهی صحیح کلاینت Supabase
+// مقداردهی کلاینت Supabase
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 let currentUser = null;
@@ -26,19 +26,19 @@ async function signUp() {
     return alert("لطفاً تمام فیلدها را پر کنید!");
   }
 
+  // ذخیره نام کاربری در حافظه مرورگر برای موقع ورود
+  localStorage.setItem("pending_username", username);
+
   try {
-    const { data, error } = await supabaseClient.auth.signUp({ email, password });
+    const { data, error } = await supabaseClient.auth.signUp({
+      email,
+      password,
+      options: { data: { username: username } }
+    });
+
     if (error) return alert("خطا در ثبت‌نام: " + error.message);
 
-    if (data.user) {
-      const { error: profileError } = await supabaseClient.from("profiles").insert([{ id: data.user.id, username }]);
-      if (profileError) {
-        console.error("Profile Error:", profileError);
-        alert("اکانت ساخته شد اما نام کاربری ذخیره نشد: " + profileError.message);
-      } else {
-        alert("ثبت‌نام با موفقیت انجام شد! حالا دکمه ورود را بزنید.");
-      }
-    }
+    alert("ثبت‌نام با موفقیت انجام شد! حالا دکمه ورود را بزنید.");
   } catch (err) {
     alert("خطای ناشناخته: " + err.message);
   }
@@ -56,11 +56,39 @@ async function signIn() {
   if (error) return alert("خطا در ورود: " + error.message);
 
   currentUser = data.user;
+
+  // بررسی و ساخت خودکار پروفایل اگر وجود نداشته باشد
+  await ensureProfileExists();
+
   initApp();
+}
+
+// تابع اطمینان از وجود پروفایل در جدول profiles
+async function ensureProfileExists() {
+  if (!currentUser) return;
+
+  // ۱. چک می‌کنیم آیا پروفایل دارد؟
+  const { data: profile } = await supabaseClient
+    .from("profiles")
+    .select("username")
+    .eq("id", currentUser.id)
+    .maybeSingle();
+
+  // ۲. اگر پروفایل نداشت، آن را می‌سازیم
+  if (!profile) {
+    const savedUsername = localStorage.getItem("pending_username") || 
+                          currentUser.user_metadata?.username || 
+                          currentUser.email.split("@")[0];
+
+    await supabaseClient.from("profiles").upsert([
+      { id: currentUser.id, username: savedUsername }
+    ]);
+  }
 }
 
 async function signOut() {
   await supabaseClient.auth.signOut();
+  localStorage.removeItem("pending_username");
   location.reload();
 }
 
@@ -69,7 +97,12 @@ async function initApp() {
   document.getElementById("auth-container").classList.add("hidden");
   document.getElementById("app-container").classList.remove("hidden");
 
-  const { data: profile } = await supabaseClient.from("profiles").select("username").eq("id", currentUser.id).single();
+  const { data: profile } = await supabaseClient
+    .from("profiles")
+    .select("username")
+    .eq("id", currentUser.id)
+    .maybeSingle();
+
   if (profile) {
     document.getElementById("current-username").innerText = profile.username;
   }
@@ -83,18 +116,13 @@ async function sendFriendRequest() {
   const friendUsername = document.getElementById("friend-username").value.trim();
   if (!friendUsername) return alert("نام کاربری دوست را وارد کنید!");
 
-  // جستجو بدون حساسیت به حروف بزرگ و کوچک
   const { data: targetUsers, error } = await supabaseClient
     .from("profiles")
     .select("id, username")
     .ilike("username", friendUsername);
 
-  if (error) {
-    return alert("خطا در جستجو: " + error.message);
-  }
-
-  if (!targetUsers || targetUsers.length === 0) {
-    return alert(`کاربری با آیدی "${friendUsername}" در جدول profiles یافت نشد!`);
+  if (error || !targetUsers || targetUsers.length === 0) {
+    return alert(`کاربری با نام "${friendUsername}" یافت نشد!`);
   }
 
   const targetUser = targetUsers[0];
@@ -117,12 +145,10 @@ async function sendFriendRequest() {
 }
 
 async function loadFriends() {
-  const { data: profiles, error } = await supabaseClient.from("profiles").select("*");
-  if (error) console.error("خطا در دریافت لیست کاربران:", error);
-
+  const { data: profiles } = await supabaseClient.from("profiles").select("*");
   const list = document.getElementById("friends-list");
   list.innerHTML = "";
-  
+
   if (profiles) {
     profiles.forEach(p => {
       if (p.id !== currentUser.id) {

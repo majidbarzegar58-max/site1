@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function signUp() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  const username = document.getElementById("username").value;
+  const username = document.getElementById("username").value.trim();
 
   if (!email || !password || !username) {
     return alert("لطفاً تمام فیلدها را پر کنید!");
@@ -32,8 +32,12 @@ async function signUp() {
 
     if (data.user) {
       const { error: profileError } = await supabaseClient.from("profiles").insert([{ id: data.user.id, username }]);
-      if (profileError) console.error("Profile Error:", profileError);
-      alert("ثبت‌نام با موفقیت انجام شد! حالا دکمه ورود را بزنید.");
+      if (profileError) {
+        console.error("Profile Error:", profileError);
+        alert("اکانت ساخته شد اما نام کاربری ذخیره نشد: " + profileError.message);
+      } else {
+        alert("ثبت‌نام با موفقیت انجام شد! حالا دکمه ورود را بزنید.");
+      }
     }
   } catch (err) {
     alert("خطای ناشناخته: " + err.message);
@@ -79,13 +83,18 @@ async function sendFriendRequest() {
   const friendUsername = document.getElementById("friend-username").value.trim();
   if (!friendUsername) return alert("نام کاربری دوست را وارد کنید!");
 
+  // جستجو بدون حساسیت به حروف بزرگ و کوچک
   const { data: targetUsers, error } = await supabaseClient
     .from("profiles")
     .select("id, username")
     .ilike("username", friendUsername);
 
-  if (error || !targetUsers || targetUsers.length === 0) {
-    return alert("کاربری با این نام یافت نشد!");
+  if (error) {
+    return alert("خطا در جستجو: " + error.message);
+  }
+
+  if (!targetUsers || targetUsers.length === 0) {
+    return alert(`کاربری با آیدی "${friendUsername}" در جدول profiles یافت نشد!`);
   }
 
   const targetUser = targetUsers[0];
@@ -99,16 +108,18 @@ async function sendFriendRequest() {
   ]);
 
   if (reqError) {
-    return alert("خطا در افزودن دوست: " + reqError.message);
+    return alert("خطا در ثبت دوست: " + reqError.message);
   }
 
-  alert("دوست با موفقیت اضافه شد!");
+  alert(`کاربر ${targetUser.username} با موفقیت اضافه شد!`);
   document.getElementById("friend-username").value = "";
   loadFriends();
 }
 
 async function loadFriends() {
-  const { data: profiles } = await supabaseClient.from("profiles").select("*");
+  const { data: profiles, error } = await supabaseClient.from("profiles").select("*");
+  if (error) console.error("خطا در دریافت لیست کاربران:", error);
+
   const list = document.getElementById("friends-list");
   list.innerHTML = "";
   

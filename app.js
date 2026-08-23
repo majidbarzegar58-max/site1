@@ -57,7 +57,7 @@ async function signIn() {
 
   currentUser = data.user;
 
-  // بررسی و ساخت خودکار پروفایل اگر وجود نداشته باشد
+  // بررسی و ساخت خودکار پروفایل در صورت عدم وجود
   await ensureProfileExists();
 
   initApp();
@@ -67,14 +67,12 @@ async function signIn() {
 async function ensureProfileExists() {
   if (!currentUser) return;
 
-  // ۱. چک می‌کنیم آیا پروفایل دارد؟
   const { data: profile } = await supabaseClient
     .from("profiles")
     .select("username")
     .eq("id", currentUser.id)
     .maybeSingle();
 
-  // ۲. اگر پروفایل نداشت، آن را می‌سازیم
   if (!profile) {
     const savedUsername = localStorage.getItem("pending_username") || 
                           currentUser.user_metadata?.username || 
@@ -145,18 +143,43 @@ async function sendFriendRequest() {
 }
 
 async function loadFriends() {
-  const { data: profiles } = await supabaseClient.from("profiles").select("*");
+  // ۱. دریافت لیست ارتباط‌هایی که این کاربر در آن حضور دارد
+  const { data: connections, error } = await supabaseClient
+    .from("friend_requests")
+    .select("sender_id, receiver_id")
+    .eq("status", "accepted")
+    .or(`sender_id.eq.${currentUser.id},receiver_id.eq.${currentUser.id}`);
+
+  if (error) {
+    console.error("خطا در دریافت لیست دوستان:", error);
+    return;
+  }
+
   const list = document.getElementById("friends-list");
   list.innerHTML = "";
 
-  if (profiles) {
-    profiles.forEach(p => {
-      if (p.id !== currentUser.id) {
-        const li = document.createElement("li");
-        li.innerText = p.username;
-        li.onclick = () => selectFriend(p);
-        list.appendChild(li);
-      }
+  // ۲. استخراج آیدی طرف مقابل
+  const friendIds = connections ? connections.map(c => 
+    c.sender_id === currentUser.id ? c.receiver_id : c.sender_id
+  ) : [];
+
+  if (friendIds.length === 0) {
+    list.innerHTML = "<li style='padding:8px; color:#888;'>هیچ دوستی ندارید</li>";
+    return;
+  }
+
+  // ۳. دریافت مشخصات فقط همان آیدی‌های اضافه شده
+  const { data: friends } = await supabaseClient
+    .from("profiles")
+    .select("*")
+    .in("id", friendIds);
+
+  if (friends) {
+    friends.forEach(p => {
+      const li = document.createElement("li");
+      li.innerText = p.username;
+      li.onclick = () => selectFriend(p);
+      list.appendChild(li);
     });
   }
 }

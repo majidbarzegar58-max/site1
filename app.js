@@ -7,6 +7,15 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let currentUser = null;
 let activeFriend = null;
 
+// بررسی خودکار نشست کاربری هنگام لود شدن صفحه (حفظ ورود با رفرش)
+document.addEventListener("DOMContentLoaded", async () => {
+  const { data: { session } } = await supabaseClient.auth.getSession();
+  if (session) {
+    currentUser = session.user;
+    initApp();
+  }
+});
+
 // ۱. سیستم ثبت‌نام و ورود
 async function signUp() {
   const email = document.getElementById("email").value;

@@ -67,18 +67,32 @@ async function initApp() {
 
 // ۳. مدیریت دوستان
 async function sendFriendRequest() {
-  const friendUsername = document.getElementById("friend-username").value;
+  const friendUsername = document.getElementById("friend-username").value.trim();
   if (!friendUsername) return alert("نام کاربری دوست را وارد کنید!");
 
-  const { data: targetUser } = await supabaseClient.from("profiles").select("id").eq("username", friendUsername).single();
+  const { data: targetUsers, error } = await supabaseClient
+    .from("profiles")
+    .select("id, username")
+    .ilike("username", friendUsername);
 
-  if (!targetUser) return alert("کاربری با این نام یافت نشد!");
-  if (targetUser.id === currentUser.id) return alert("نمی‌توانید به خودتان درخواست دهید!");
+  if (error || !targetUsers || targetUsers.length === 0) {
+    return alert("کاربری با این نام یافت نشد!");
+  }
 
-  await supabaseClient.from("friend_requests").insert([
+  const targetUser = targetUsers[0];
+
+  if (targetUser.id === currentUser.id) {
+    return alert("نمی‌توانید به خودتان درخواست دهید!");
+  }
+
+  const { error: reqError } = await supabaseClient.from("friend_requests").insert([
     { sender_id: currentUser.id, receiver_id: targetUser.id, status: "accepted" }
   ]);
-  
+
+  if (reqError) {
+    return alert("خطا در افزودن دوست: " + reqError.message);
+  }
+
   alert("دوست با موفقیت اضافه شد!");
   document.getElementById("friend-username").value = "";
   loadFriends();

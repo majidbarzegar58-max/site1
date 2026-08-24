@@ -8,57 +8,52 @@
 </head>
 <body>
 
-  <!-- ۱. بخش ورود و ثبت‌نام -->
-  <div id="auth-container" class="container">
+  <!-- ۱. فرم ورود و ثبت‌نام -->
+  <div id="auth-container">
     <h2>ورود / ثبت‌نام</h2>
     
     <input type="text" id="username" placeholder="نام کاربری (برای ثبت‌نام)">
     <input type="email" id="email" placeholder="ایمیل">
     <input type="password" id="password" placeholder="رمز عبور">
 
-    <div class="btn-group">
-      <button type="button" onclick="signIn()">ورود</button>
-      <button type="button" onclick="signUp()">ثبت‌نام</button>
-    </div>
+    <button type="button" onclick="signIn()">ورود</button>
+    <button type="button" onclick="signUp()" style="margin-top: 10px; background: rgba(255,255,255,0.1); box-shadow: none;">ثبت‌نام</button>
   </div>
 
   <!-- ۲. بخش اصلی پیام‌رسان -->
-  <div id="app-container" class="container hidden">
-    <div class="header">
-      <span>خوش آمدید <b id="current-username"></b></span>
-      <button onclick="signOut()" class="logout-btn">خروج</button>
-    </div>
-
-    <div class="chat-layout">
-      <!-- لیست دوستان -->
-      <div class="sidebar">
-        <h3>افزودن دوست</h3>
-        <div class="add-friend-box">
-          <input type="text" id="friend-username" placeholder="آیدی دوست...">
-          <button onclick="sendFriendRequest()">+</button>
-        </div>
-
-        <h3>دوستان شما</h3>
-        <ul id="friends-list"></ul>
+  <div id="app-container" class="hidden">
+    
+    <!-- سیدبار باریک سمت راست -->
+    <div class="sidebar">
+      <div class="user-info">
+        <span id="current-username">کاربر</span>
+        <button onclick="signOut()">خروج</button>
       </div>
 
-      <!-- صفحه چت -->
-      <div class="chat-area">
-        <h3 id="chat-header">یک دوست را برای چت انتخاب کنید</h3>
-        
-        <div id="messages-list" class="messages-box"></div>
+      <div class="add-friend">
+        <input type="text" id="friend-username" placeholder="آیدی دوست...">
+        <button onclick="sendFriendRequest()">+</button>
+      </div>
 
-        <div id="input-box" class="input-area hidden">
-          <input type="text" id="message-text" placeholder="پیام خود را بنویسید...">
-          <button onclick="sendMessage()">ارسال</button>
-        </div>
+      <h3>دوستان شما</h3>
+      <ul id="friends-list"></ul>
+    </div>
+
+    <!-- منطقه اصلی چت -->
+    <div class="chat-area">
+      <div id="chat-header">یک دوست را برای چت انتخاب کنید</div>
+      
+      <div id="messages-list"></div>
+
+      <div id="input-box" class="message-input hidden">
+        <input type="text" id="message-text" placeholder="پیام خود را بنویسید...">
+        <button onclick="sendMessage()">ارسال</button>
       </div>
     </div>
+
   </div>
 
-  <!-- فراخوانی کتابخانه Supabase و فایل app.js -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="app.js"></script>
-
 </body>
 </html>

@@ -729,19 +729,20 @@ button {
   }
 
   .sidebar {
-    width: 90px;
-    min-width: 90px;
+    width: 75px;
+    min-width: 75px;
   }
 
   .user-info {
-    padding: 15px 10px;
+    padding: 12px 8px;
 
     justify-content: center;
   }
 
   .user-info::before {
-    width: 45px;
-    height: 45px;
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
   }
 
   #current-username {
@@ -753,18 +754,20 @@ button {
   }
 
   .add-friend {
-    padding: 10px;
+    padding: 8px 6px;
 
     flex-direction: column;
   }
 
   .add-friend input {
     width: 100%;
-    font-size: 10px;
+    font-size: 11px;
+    height: 36px;
+    padding: 0 6px;
   }
 
   .add-friend button {
-    height: 35px;
+    height: 32px;
     padding: 0;
 
     font-size: 11px;
@@ -775,13 +778,13 @@ button {
   }
 
   #friends-list {
-    padding: 5px;
+    padding: 4px;
   }
 
   #friends-list li {
-    height: 55px;
+    height: 48px;
 
-    padding: 8px;
+    padding: 6px;
 
     font-size: 0;
 
@@ -793,45 +796,51 @@ button {
   #friends-list li::before {
     margin: 0;
 
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
+    font-size: 15px;
   }
 
   #chat-header {
-    min-height: 65px;
+    min-height: 58px;
 
-    padding: 0 15px;
-
-    font-size: 14px;
-  }
-
-  #chat-header::before {
-    width: 38px;
-    height: 38px;
-
-    margin-left: 9px;
-  }
-
-  #messages-list {
-    padding: 18px 12px;
-  }
-
-  .msg {
-    max-width: 82%;
+    padding: 0 12px;
 
     font-size: 13px;
   }
 
+  #chat-header::before {
+    width: 32px;
+    height: 32px;
+
+    margin-left: 8px;
+    font-size: 15px;
+  }
+
+  #messages-list {
+    padding: 14px 10px;
+  }
+
+  .msg {
+    max-width: 85%;
+
+    font-size: 13px;
+    padding: 9px 12px;
+  }
+
   .message-input {
-    padding: 10px;
+    padding: 8px;
   }
 
   .message-input input {
-    height: 46px;
+    height: 42px;
+    font-size: 13px;
+    padding: 0 12px;
   }
 
   .message-input button {
-    width: 65px;
+    width: 60px;
+    font-size: 12px;
   }
 }
 
@@ -842,16 +851,17 @@ button {
 @media (max-width: 450px) {
 
   #auth-container {
-    padding: 28px 20px;
+    padding: 22px 16px;
+    width: 90%;
   }
 
   #auth-container h2 {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .sidebar {
-    width: 72px;
-    min-width: 72px;
+    width: 62px;
+    min-width: 62px;
   }
 
   .add-friend input {
@@ -860,12 +870,13 @@ button {
 
   .add-friend button {
     font-size: 0;
+    height: 36px;
   }
 
   .add-friend button::after {
     content: "+";
 
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .msg {

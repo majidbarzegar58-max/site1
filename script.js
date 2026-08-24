@@ -14,8 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentUsernameSpan = document.getElementById("current-username");
 
   // آدرس بک‌اند (در صورت نیاز آدرس دقیق Railway خودت را جایگزین کن)
-  const API_URL = "https://tion-2491.up.railway.app"; 
-
+  const API_URL = "https://site1-production-2491.up.railway.app";
   // ==========================================
   // عملیات ثبت‌نام
   // ==========================================

@@ -8,10 +8,9 @@
 </head>
 <body>
 
-  <!-- ۱. فرم ورود و ثبت‌نام -->
+  <!-- فرم ورود و ثبت‌نام -->
   <div id="auth-container">
     <h2>ورود / ثبت‌نام</h2>
-    
     <input type="text" id="username" placeholder="نام کاربری (برای ثبت‌نام)">
     <input type="email" id="email" placeholder="ایمیل">
     <input type="password" id="password" placeholder="رمز عبور">
@@ -20,16 +19,16 @@
     <button type="button" onclick="signUp()" style="margin-top: 10px; background: rgba(255,255,255,0.1); box-shadow: none;">ثبت‌نام</button>
   </div>
 
-  <!-- ۲. بخش اصلی پیام‌رسان -->
+  <!-- برنامه اصلی -->
   <div id="app-container" class="hidden">
     
-    <!-- سیدبار باریک سمت راست -->
     <div class="sidebar">
       <div class="user-info">
-        <span id="current-username">کاربر</span>
+        <span id="current-username">در حال بارگذاری...</span>
         <button onclick="signOut()">خروج</button>
       </div>
 
+      <!-- کادر سرچ آیدی دوست -->
       <div class="add-friend">
         <input type="text" id="friend-username" placeholder="آیدی دوست...">
         <button onclick="sendFriendRequest()">+</button>
@@ -39,7 +38,6 @@
       <ul id="friends-list"></ul>
     </div>
 
-    <!-- منطقه اصلی چت -->
     <div class="chat-area">
       <div id="chat-header">یک دوست را برای چت انتخاب کنید</div>
       

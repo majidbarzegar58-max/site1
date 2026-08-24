@@ -102,7 +102,9 @@ async function initApp() {
     .maybeSingle();
 
   if (profile) {
-    document.getElementById("current-username").innerText = profile.username;
+    const userElement = document.getElementById("current-username");
+    userElement.innerText = profile.username;
+    userElement.style.color = "#ffffff";
   }
 
   loadFriends();
@@ -164,7 +166,7 @@ async function loadFriends() {
   ) : [];
 
   if (friendIds.length === 0) {
-    list.innerHTML = "<li style='padding:8px; color:#888;'>هیچ دوستی ندارید</li>";
+    list.innerHTML = "<li style='padding:12px; color:#94a3b8; font-size:13px; text-align:center;'>هیچ دوستی ندارید</li>";
     return;
   }
 
@@ -177,7 +179,14 @@ async function loadFriends() {
   if (friends) {
     friends.forEach(p => {
       const li = document.createElement("li");
-      li.innerText = p.username;
+      
+      const span = document.createElement("span");
+      span.innerText = p.username;
+      span.style.color = "#ffffff";
+      span.style.fontWeight = "600";
+      span.style.fontSize = "14px";
+      
+      li.appendChild(span);
       li.onclick = () => selectFriend(p);
       list.appendChild(li);
     });

@@ -1,5 +1,5 @@
 /* ================================
-   Messenger Modern UI
+   Messenger Modern UI (Responsive)
    ================================ */
 
 * {
@@ -27,28 +27,17 @@
 }
 
 body {
-  font-family:
-    "Segoe UI",
-    Tahoma,
-    Arial,
-    sans-serif;
-
+  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
   min-height: 100vh;
   background:
     radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.18), transparent 30%),
     radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.15), transparent 30%),
     var(--bg);
-
   color: var(--text);
   direction: rtl;
 }
 
-/* ================================
-   General
-   ================================ */
-
-button,
-input {
+button, input {
   font-family: inherit;
 }
 
@@ -67,84 +56,54 @@ button {
 
 #auth-container {
   width: 420px;
-  max-width: 88vw;
-
+  max-width: calc(100% - 30px);
   position: absolute;
   top: 50%;
   left: 50%;
-
   transform: translate(-50%, -50%);
-
-  padding: 32px 24px;
-
+  padding: 38px;
   background: rgba(15, 23, 42, 0.82);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-
   border: 1px solid var(--border);
   border-radius: 24px;
-
-  box-shadow:
-    0 25px 80px rgba(0, 0, 0, 0.45),
-    0 0 60px rgba(99, 102, 241, 0.08);
-
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.45), 0 0 60px rgba(99, 102, 241, 0.08);
   text-align: center;
-
   animation: authAppear 0.6s ease;
 }
 
 #auth-container::before {
   content: "💬";
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  width: 68px;
-  height: 68px;
-
+  width: 72px;
+  height: 72px;
   margin: 0 auto 18px;
-
   border-radius: 22px;
-
-  font-size: 32px;
-
-  background: linear-gradient(
-    135deg,
-    rgba(99, 102, 241, 0.25),
-    rgba(139, 92, 246, 0.25)
-  );
-
+  font-size: 34px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(139, 92, 246, 0.25));
   border: 1px solid rgba(255, 255, 255, 0.1);
-
-  box-shadow:
-    0 10px 35px rgba(99, 102, 241, 0.2);
+  box-shadow: 0 10px 35px rgba(99, 102, 241, 0.2);
 }
 
 #auth-container h2 {
-  font-size: 24px;
-  margin-bottom: 24px;
+  font-size: 26px;
+  margin-bottom: 28px;
   font-weight: 700;
 }
 
 #auth-container input {
   width: 100%;
-  height: 50px;
-
+  height: 52px;
   margin-bottom: 14px;
-  padding: 0 16px;
-
+  padding: 0 18px;
   border: 1px solid var(--border);
   border-radius: 14px;
-
   outline: none;
-
   background: rgba(255, 255, 255, 0.045);
-
   color: white;
-
-  font-size: 15px;
-
+  font-size: 14px;
   transition: 0.25s;
 }
 
@@ -155,73 +114,46 @@ button {
 #auth-container input:focus {
   border-color: var(--primary);
   background: rgba(99, 102, 241, 0.08);
-
-  box-shadow:
-    0 0 0 3px rgba(99, 102, 241, 0.12);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
 }
 
 #auth-container button {
   width: 100%;
-  height: 48px;
-
+  height: 50px;
   margin-top: 8px;
-
   border-radius: 14px;
-
   background: var(--sent);
-
   color: white;
-
   font-size: 15px;
   font-weight: 700;
-
   transition: 0.25s;
-
-  box-shadow:
-    0 8px 25px rgba(99, 102, 241, 0.25);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.25);
 }
 
 #auth-container button:hover {
   transform: translateY(-2px);
-
-  box-shadow:
-    0 12px 30px rgba(99, 102, 241, 0.35);
-}
-
-#auth-container button:active {
-  transform: scale(0.98);
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.35);
 }
 
 /* ================================
-   Main App
+   Main App Layout
    ================================ */
 
 #app-container {
   width: min(1400px, 96vw);
   height: 92vh;
-
   position: absolute;
   top: 50%;
   left: 50%;
-
   transform: translate(-50%, -50%);
-
   display: flex;
-
   overflow: hidden;
-
   border: 1px solid var(--border);
   border-radius: 26px;
-
   background: rgba(10, 15, 28, 0.88);
-
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
-
-  box-shadow:
-    0 30px 100px rgba(0, 0, 0, 0.55),
-    0 0 80px rgba(99, 102, 241, 0.06);
-
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.55), 0 0 80px rgba(99, 102, 241, 0.06);
   animation: appAppear 0.6s ease;
 }
 
@@ -230,123 +162,73 @@ button {
    ================================ */
 
 .sidebar {
-  width: 340px;
-  min-width: 340px;
-
+  width: 320px;
+  min-width: 320px;
   display: flex;
   flex-direction: column;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(20, 27, 45, 0.95),
-      rgba(13, 18, 31, 0.95)
-    );
-
+  background: linear-gradient(180deg, rgba(20, 27, 45, 0.95), rgba(13, 18, 31, 0.95));
   border-left: 1px solid var(--border);
 }
 
-/* User info */
-
 .user-info {
-  min-height: 82px;
-
-  padding: 18px 20px;
-
+  min-height: 70px;
+  padding: 15px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   border-bottom: 1px solid var(--border);
 }
 
 .user-info::before {
   content: "👤";
-
-  width: 44px;
-  height: 44px;
-
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 50%;
-
-  background: linear-gradient(
-    135deg,
-    #6366f1,
-    #8b5cf6
-  );
-
-  font-size: 20px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  font-size: 18px;
 }
 
 #current-username {
   flex: 1;
-
-  margin-right: 12px;
-
-  font-size: 15px;
+  margin-right: 10px;
+  font-size: 14px;
   font-weight: 700;
-
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: #fff;
 }
 
 .user-info button {
-  padding: 9px 13px;
-
+  padding: 8px 12px;
   border-radius: 10px;
-
-  background: rgba(239, 68, 68, 0.1);
+  background: rgba(239, 68, 68, 0.15);
   color: #f87171;
-
   font-size: 12px;
-
   transition: 0.2s;
 }
 
-.user-info button:hover {
-  background: rgba(239, 68, 68, 0.18);
-  transform: translateY(-1px);
-}
-
-/* ================================
-   Add Friend
-   ================================ */
-
 .add-friend {
-  padding: 18px;
-
+  padding: 15px;
   display: flex;
   gap: 8px;
-
   border-bottom: 1px solid var(--border);
 }
 
 .add-friend input {
   flex: 1;
-
   min-width: 0;
-  height: 44px;
-
-  padding: 0 13px;
-
+  height: 42px;
+  padding: 0 12px;
   border: 1px solid var(--border);
   border-radius: 12px;
-
   outline: none;
-
-  background: rgba(255, 255, 255, 0.045);
-
+  background: rgba(255, 255, 255, 0.05);
   color: white;
-
-  transition: 0.25s;
-}
-
-.add-friend input:focus {
-  border-color: var(--primary);
+  font-size: 13px;
 }
 
 .add-friend input::placeholder {
@@ -355,103 +237,54 @@ button {
 
 .add-friend button {
   padding: 0 16px;
-
   border-radius: 12px;
-
   background: var(--primary);
-
   color: white;
-
   font-weight: 700;
-
-  transition: 0.2s;
+  font-size: 16px;
 }
-
-.add-friend button:hover {
-  background: var(--primary-dark);
-  transform: translateY(-1px);
-}
-
-/* ================================
-   Friends
-   ================================ */
 
 .sidebar h3 {
-  padding: 18px 20px 10px;
-
+  padding: 15px 18px 8px;
   color: var(--text-secondary);
-
   font-size: 13px;
   font-weight: 600;
 }
 
 #friends-list {
   list-style: none;
-
   padding: 5px 10px;
-
   overflow-y: auto;
-}
-
-#friends-list::-webkit-scrollbar,
-#messages-list::-webkit-scrollbar {
-  width: 5px;
-}
-
-#friends-list::-webkit-scrollbar-thumb,
-#messages-list::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.2);
-  border-radius: 20px;
+  flex: 1;
 }
 
 #friends-list li {
-  position: relative;
-
-  margin-bottom: 5px;
-  padding: 14px 14px 14px 14px;
-
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  padding: 10px 12px;
   border-radius: 14px;
-
   cursor: pointer;
-
   color: #e2e8f0;
-
-  transition:
-    background 0.2s,
-    transform 0.2s;
+  transition: background 0.2s;
 }
 
 #friends-list li::before {
   content: "👤";
-
   display: inline-flex;
-
-  width: 38px;
-  height: 38px;
-
+  width: 36px;
+  height: 36px;
   align-items: center;
   justify-content: center;
-
   margin-left: 10px;
-
-  vertical-align: middle;
-
   border-radius: 50%;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(99, 102, 241, 0.3),
-      rgba(139, 92, 246, 0.3)
-    );
-
-  font-size: 17px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(139, 92, 246, 0.3));
+  font-size: 16px;
+  flex-shrink: 0;
 }
 
 #friends-list li:hover {
-  background: rgba(99, 102, 241, 0.1);
-
-  transform: translateX(-3px);
+  background: rgba(99, 102, 241, 0.15);
 }
 
 /* ================================
@@ -460,374 +293,168 @@ button {
 
 .chat-area {
   flex: 1;
-
   min-width: 0;
-
   display: flex;
   flex-direction: column;
-
-  position: relative;
-
-  background:
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(99, 102, 241, 0.07),
-      transparent 30%
-    ),
-    #0b1020;
+  background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.07), transparent 30%), #0b1020;
 }
 
-/* Chat header */
-
 #chat-header {
-  min-height: 76px;
-
+  min-height: 70px;
   display: flex;
   align-items: center;
-
-  padding: 0 25px;
-
+  padding: 0 20px;
   border-bottom: 1px solid var(--border);
-
   background: rgba(15, 23, 42, 0.65);
-
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
 }
 
 #chat-header::before {
   content: "👤";
-
-  width: 42px;
-  height: 42px;
-
+  width: 38px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
-
   margin-left: 12px;
-
   border-radius: 50%;
-
-  background:
-    linear-gradient(
-      135deg,
-      #6366f1,
-      #8b5cf6
-    );
-
-  font-size: 18px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  font-size: 16px;
+  flex-shrink: 0;
 }
-
-/* ================================
-   Messages
-   ================================ */
 
 #messages-list {
   flex: 1;
-
-  padding: 28px;
-
+  padding: 20px;
   overflow-y: auto;
-
   display: flex;
   flex-direction: column;
-
   gap: 10px;
 }
 
-/* Message bubble */
-
 .msg {
-  max-width: min(70%, 520px);
-
-  padding: 11px 15px;
-
-  border-radius: 18px;
-
-  line-height: 1.7;
-
+  max-width: min(75%, 500px);
+  padding: 10px 14px;
+  border-radius: 16px;
+  line-height: 1.6;
   font-size: 14px;
-
   word-wrap: break-word;
-
   animation: messageAppear 0.25s ease;
 }
 
-/* Sent */
-
 .msg.sent {
   align-self: flex-start;
-
   background: var(--sent);
-
   color: white;
-
-  border-bottom-left-radius: 5px;
-
-  box-shadow:
-    0 6px 20px rgba(99, 102, 241, 0.18);
+  border-bottom-left-radius: 4px;
 }
-
-/* Received */
 
 .msg.received {
   align-self: flex-end;
-
   background: var(--received);
-
   color: #e2e8f0;
-
-  border-bottom-right-radius: 5px;
-
+  border-bottom-right-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* ================================
-   Message Input
-   ================================ */
-
 .message-input {
   display: flex;
-
   gap: 10px;
-
-  padding: 16px 20px;
-
+  padding: 14px 16px;
   border-top: 1px solid var(--border);
-
-  background:
-    rgba(15, 23, 42, 0.8);
-
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  background: rgba(15, 23, 42, 0.8);
 }
 
 .message-input input {
   flex: 1;
-
   min-width: 0;
-
-  height: 50px;
-
-  padding: 0 18px;
-
+  height: 46px;
+  padding: 0 16px;
   border: 1px solid var(--border);
-  border-radius: 15px;
-
+  border-radius: 12px;
   outline: none;
-
   background: rgba(255, 255, 255, 0.05);
-
   color: white;
-
   font-size: 14px;
-
-  transition: 0.25s;
-}
-
-.message-input input::placeholder {
-  color: #64748b;
-}
-
-.message-input input:focus {
-  border-color: var(--primary);
-
-  box-shadow:
-    0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
 .message-input button {
-  width: 90px;
-
-  border-radius: 15px;
-
+  width: 80px;
+  border-radius: 12px;
   background: var(--sent);
-
   color: white;
-
   font-weight: 700;
-
-  transition: 0.2s;
-
-  box-shadow:
-    0 7px 20px rgba(99, 102, 241, 0.2);
-}
-
-.message-input button:hover {
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 10px 25px rgba(99, 102, 241, 0.3);
-}
-
-.message-input button:active {
-  transform: scale(0.97);
 }
 
 /* ================================
-   Animations
-   ================================ */
-
-@keyframes authAppear {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -45%) scale(0.96);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-@keyframes appAppear {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -48%) scale(0.98);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-@keyframes messageAppear {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ================================
-   Mobile
+   Mobile & Responsive Fixes
    ================================ */
 
 @media (max-width: 800px) {
-
   #app-container {
-    width: 100%;
+    width: 100vw;
     height: 100vh;
-
     top: 0;
     left: 0;
-
     transform: none;
-
     border-radius: 0;
-
     border: none;
   }
 
   .sidebar {
-    width: 90px;
-    min-width: 90px;
-  }
-
-  .user-info {
-    padding: 15px 10px;
-
-    justify-content: center;
-  }
-
-  .user-info::before {
-    width: 45px;
-    height: 45px;
+    width: 40%;
+    min-width: 140px;
   }
 
   #current-username {
-    display: none;
-  }
-
-  .user-info button {
-    display: none;
+    display: block;
+    font-size: 12px;
   }
 
   .add-friend {
     padding: 10px;
-
-    flex-direction: column;
+    gap: 5px;
   }
 
   .add-friend input {
-    width: 100%;
-    font-size: 10px;
+    font-size: 11px;
+    padding: 0 8px;
   }
 
   .add-friend button {
-    height: 35px;
-    padding: 0;
-
-    font-size: 11px;
+    padding: 0 10px;
   }
 
   .sidebar h3 {
-    display: none;
-  }
-
-  #friends-list {
-    padding: 5px;
+    padding: 10px 10px 5px;
+    font-size: 11px;
   }
 
   #friends-list li {
-    height: 55px;
-
-    padding: 8px;
-
-    font-size: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 8px 6px;
+    font-size: 12px;
   }
 
   #friends-list li::before {
-    margin: 0;
-
-    width: 40px;
-    height: 40px;
+    width: 28px;
+    height: 28px;
+    margin-left: 6px;
+    font-size: 13px;
   }
 
   #chat-header {
-    min-height: 65px;
-
-    padding: 0 15px;
-
-    font-size: 14px;
-  }
-
-  #chat-header::before {
-    width: 38px;
-    height: 38px;
-
-    margin-left: 9px;
+    padding: 0 12px;
+    font-size: 13px;
   }
 
   #messages-list {
-    padding: 18px 12px;
-  }
-
-  .msg {
-    max-width: 82%;
-
-    font-size: 13px;
+    padding: 12px 10px;
   }
 
   .message-input {
     padding: 10px;
-  }
-
-  .message-input input {
-    height: 46px;
+    gap: 6px;
   }
 
   .message-input button {
@@ -835,41 +462,17 @@ button {
   }
 }
 
-/* ================================
-   Small Phones
-   ================================ */
+@keyframes authAppear {
+  from { opacity: 0; transform: translate(-50%, -45%) scale(0.96); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
 
-@media (max-width: 450px) {
+@keyframes appAppear {
+  from { opacity: 0; transform: translate(-50%, -48%) scale(0.98); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
 
-  #auth-container {
-    width: 88vw;
-    padding: 30px 20px;
-  }
-
-  #auth-container h2 {
-    font-size: 22px;
-  }
-
-  .sidebar {
-    width: 72px;
-    min-width: 72px;
-  }
-
-  .add-friend input {
-    display: none;
-  }
-
-  .add-friend button {
-    font-size: 0;
-  }
-
-  .add-friend button::after {
-    content: "+";
-
-    font-size: 22px;
-  }
-
-  .msg {
-    max-width: 88%;
-  }
+@keyframes messageAppear {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }

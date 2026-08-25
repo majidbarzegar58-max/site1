@@ -1,52 +1,89 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>پیام‌رسان من</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
+
 
 <body>
 
-  <!-- ================= LOGIN ================= -->
 
-  <div id="auth-container" class="auth-page">
+  <!-- =====================================
+       LOGIN / REGISTER
+  ====================================== -->
+
+  <div
+    id="auth-container"
+    class="auth-page"
+  >
 
     <div class="auth-box">
 
-      <div class="auth-logo">💬</div>
+      <div class="auth-logo">
+        💬
+      </div>
 
-      <h1>پیام‌رسان من</h1>
-      <p class="auth-subtitle">وارد حساب خود شوید</p>
+      <h1>
+        پیام‌رسان من
+      </h1>
+
+      <p class="auth-subtitle">
+        وارد حساب خود شوید
+      </p>
+
 
       <input
         type="email"
         id="email"
         placeholder="ایمیل"
+        autocomplete="email"
       >
+
 
       <input
         type="password"
         id="password"
         placeholder="رمز عبور"
+        autocomplete="current-password"
       >
+
 
       <input
         type="text"
         id="username"
-        placeholder="نام کاربری (فقط ثبت‌نام)"
+        placeholder="نام کاربری (فقط برای ثبت‌نام)"
       >
 
-      <button class="primary-btn" onclick="signIn()">
+
+      <button
+        class="primary-btn"
+        onclick="signIn()"
+      >
         ورود
       </button>
 
-      <button class="secondary-btn" onclick="signUp()">
+
+      <button
+        class="secondary-btn"
+        onclick="signUp()"
+      >
         ایجاد حساب
       </button>
 
@@ -55,43 +92,71 @@
   </div>
 
 
-  <!-- ================= APP ================= -->
 
-  <div id="app-container" class="messenger hidden">
+  <!-- =====================================
+       MAIN APP
+  ====================================== -->
 
-    <!-- ================= SIDEBAR ================= -->
+  <div
+    id="app-container"
+    class="messenger hidden"
+  >
+
+
+    <!-- =================================
+         SIDEBAR
+    ================================== -->
 
     <aside class="sidebar">
 
-      <!-- Header -->
+
+      <!-- USER HEADER -->
 
       <div class="sidebar-header">
 
+
         <div class="profile-area">
+
 
           <div class="my-avatar">
             👤
           </div>
 
+
           <div class="my-info">
-            <strong id="current-username">کاربر</strong>
-            <span>آنلاین</span>
+
+            <strong id="current-username">
+              کاربر
+            </strong>
+
+            <span>
+              آنلاین
+            </span>
+
           </div>
 
         </div>
 
-        <button class="logout-btn" onclick="signOut()" title="خروج">
+
+        <button
+          class="logout-btn"
+          onclick="signOut()"
+          title="خروج"
+        >
           ⎋
         </button>
 
       </div>
 
 
-      <!-- Search -->
+
+      <!-- SEARCH -->
 
       <div class="search-box">
 
-        <span>🔎</span>
+        <span>
+          🔎
+        </span>
 
         <input
           type="text"
@@ -103,47 +168,67 @@
       </div>
 
 
-      <!-- Add Friend -->
+
+      <!-- ADD FRIEND -->
 
       <div class="add-friend">
 
         <input
           type="text"
           id="friend-username"
-          placeholder="نام کاربری برای افزودن"
+          placeholder="نام کاربری"
         >
 
-        <button onclick="sendFriendRequest()">
+
+        <button
+          onclick="sendFriendRequest()"
+          title="افزودن کاربر"
+        >
           +
         </button>
 
       </div>
 
 
-      <!-- Chats -->
+
+      <!-- SECTION -->
 
       <div class="section-title">
         گفتگوها
       </div>
 
+
+
+      <!-- FRIENDS -->
+
       <ul id="friends-list"></ul>
+
 
     </aside>
 
 
-    <!-- ================= CHAT ================= -->
+
+    <!-- =================================
+         CHAT AREA
+    ================================== -->
 
     <main class="chat-area">
 
-      <!-- Empty chat -->
 
-      <div id="empty-chat" class="empty-chat">
+      <!-- EMPTY CHAT -->
+
+      <div
+        id="empty-chat"
+        class="empty-chat"
+      >
 
         <div class="empty-icon">
           💬
         </div>
 
-        <h2>پیام‌رسان من</h2>
+        <h2>
+          پیام‌رسان من
+        </h2>
 
         <p>
           یک گفتگو را انتخاب کنید
@@ -152,19 +237,39 @@
       </div>
 
 
-      <!-- Chat -->
 
-      <div id="chat-content" class="chat-content hidden">
+      <!-- CHAT -->
 
-        <!-- Chat Header -->
+      <div
+        id="chat-content"
+        class="chat-content hidden"
+      >
+
+
+        <!-- CHAT HEADER -->
 
         <div class="chat-header">
 
+
+          <!-- MOBILE BACK BUTTON -->
+
+          <button
+            class="mobile-back"
+            onclick="closeMobileChat()"
+            title="بازگشت"
+          >
+            ←
+          </button>
+
+
+
           <div class="chat-user">
+
 
             <div class="chat-avatar">
               👤
             </div>
+
 
             <div>
 
@@ -178,44 +283,63 @@
 
             </div>
 
+
           </div>
+
 
         </div>
 
 
-        <!-- Messages -->
+
+        <!-- MESSAGES -->
 
         <div id="messages-list"></div>
 
 
-        <!-- Input -->
+
+        <!-- MESSAGE INPUT -->
 
         <div
-          class="message-input hidden"
           id="input-box"
+          class="message-input hidden"
         >
+
 
           <input
             type="text"
             id="message-text"
             placeholder="پیام خود را بنویسید..."
             onkeydown="handleMessageKey(event)"
+            autocomplete="off"
           >
 
-          <button onclick="sendMessage()">
+
+          <button
+            onclick="sendMessage()"
+            title="ارسال"
+          >
             ➤
           </button>
 
+
         </div>
+
 
       </div>
 
+
     </main>
+
 
   </div>
 
 
+
+  <!-- APP JS -->
+
   <script src="app.js"></script>
 
+
 </body>
+
 </html>

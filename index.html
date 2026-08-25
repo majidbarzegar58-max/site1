@@ -3,55 +3,219 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>پیام‌رسان آنلاین</title>
+
+  <title>پیام‌رسان من</title>
+
   <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-  <!-- فرم ورود و ثبت‌نام -->
-  <div id="auth-container">
-    <h2>ورود / ثبت‌نام</h2>
-    <input type="text" id="username" placeholder="نام کاربری (برای ثبت‌نام)">
-    <input type="email" id="email" placeholder="ایمیل">
-    <input type="password" id="password" placeholder="رمز عبور">
-
-    <button type="button" onclick="signIn()">ورود</button>
-    <button type="button" onclick="signUp()" style="margin-top: 10px; background: rgba(255,255,255,0.1); box-shadow: none;">ثبت‌نام</button>
-  </div>
-
-  <!-- برنامه اصلی -->
-  <div id="app-container" class="hidden">
-    
-    <div class="sidebar">
-      <div class="user-info">
-        <span id="current-username">در حال بارگذاری...</span>
-        <button onclick="signOut()">خروج</button>
-      </div>
-
-      <!-- کادر سرچ آیدی دوست -->
-      <div class="add-friend">
-        <input type="text" id="friend-username" placeholder="آیدی دوست...">
-        <button onclick="sendFriendRequest()">+</button>
-      </div>
-
-      <h3>دوستان شما</h3>
-      <ul id="friends-list"></ul>
-    </div>
-
-    <div class="chat-area">
-      <div id="chat-header">یک دوست را برای چت انتخاب کنید</div>
-      
-      <div id="messages-list"></div>
-
-      <div id="input-box" class="message-input hidden">
-        <input type="text" id="message-text" placeholder="پیام خود را بنویسید...">
-        <button onclick="sendMessage()">ارسال</button>
-      </div>
-    </div>
-
-  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+  <!-- ================= LOGIN ================= -->
+
+  <div id="auth-container" class="auth-page">
+
+    <div class="auth-box">
+
+      <div class="auth-logo">💬</div>
+
+      <h1>پیام‌رسان من</h1>
+      <p class="auth-subtitle">وارد حساب خود شوید</p>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="ایمیل"
+      >
+
+      <input
+        type="password"
+        id="password"
+        placeholder="رمز عبور"
+      >
+
+      <input
+        type="text"
+        id="username"
+        placeholder="نام کاربری (فقط ثبت‌نام)"
+      >
+
+      <button class="primary-btn" onclick="signIn()">
+        ورود
+      </button>
+
+      <button class="secondary-btn" onclick="signUp()">
+        ایجاد حساب
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= APP ================= -->
+
+  <div id="app-container" class="messenger hidden">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+      <!-- Header -->
+
+      <div class="sidebar-header">
+
+        <div class="profile-area">
+
+          <div class="my-avatar">
+            👤
+          </div>
+
+          <div class="my-info">
+            <strong id="current-username">کاربر</strong>
+            <span>آنلاین</span>
+          </div>
+
+        </div>
+
+        <button class="logout-btn" onclick="signOut()" title="خروج">
+          ⎋
+        </button>
+
+      </div>
+
+
+      <!-- Search -->
+
+      <div class="search-box">
+
+        <span>🔎</span>
+
+        <input
+          type="text"
+          id="search-friends"
+          placeholder="جستجوی کاربران..."
+          oninput="searchFriends()"
+        >
+
+      </div>
+
+
+      <!-- Add Friend -->
+
+      <div class="add-friend">
+
+        <input
+          type="text"
+          id="friend-username"
+          placeholder="نام کاربری برای افزودن"
+        >
+
+        <button onclick="sendFriendRequest()">
+          +
+        </button>
+
+      </div>
+
+
+      <!-- Chats -->
+
+      <div class="section-title">
+        گفتگوها
+      </div>
+
+      <ul id="friends-list"></ul>
+
+    </aside>
+
+
+    <!-- ================= CHAT ================= -->
+
+    <main class="chat-area">
+
+      <!-- Empty chat -->
+
+      <div id="empty-chat" class="empty-chat">
+
+        <div class="empty-icon">
+          💬
+        </div>
+
+        <h2>پیام‌رسان من</h2>
+
+        <p>
+          یک گفتگو را انتخاب کنید
+        </p>
+
+      </div>
+
+
+      <!-- Chat -->
+
+      <div id="chat-content" class="chat-content hidden">
+
+        <!-- Chat Header -->
+
+        <div class="chat-header">
+
+          <div class="chat-user">
+
+            <div class="chat-avatar">
+              👤
+            </div>
+
+            <div>
+
+              <strong id="chat-header">
+                کاربر
+              </strong>
+
+              <span>
+                آنلاین
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Messages -->
+
+        <div id="messages-list"></div>
+
+
+        <!-- Input -->
+
+        <div
+          class="message-input hidden"
+          id="input-box"
+        >
+
+          <input
+            type="text"
+            id="message-text"
+            placeholder="پیام خود را بنویسید..."
+            onkeydown="handleMessageKey(event)"
+          >
+
+          <button onclick="sendMessage()">
+            ➤
+          </button>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+
   <script src="app.js"></script>
+
 </body>
 </html>

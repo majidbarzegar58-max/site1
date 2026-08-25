@@ -8,16 +8,13 @@
   padding: 0;
 }
 
-
 html,
 body {
   width: 100%;
   height: 100%;
 }
 
-
 body {
-
   font-family:
     "Segoe UI",
     Tahoma,
@@ -25,29 +22,24 @@ body {
     sans-serif;
 
   background: #0e1621;
-
   color: #ffffff;
 
   overflow: hidden;
 }
-
 
 button,
 input {
   font-family: inherit;
 }
 
-
 button {
   border: none;
   cursor: pointer;
 }
 
-
 .hidden {
   display: none !important;
 }
-
 
 
 /* =========================================
@@ -55,29 +47,17 @@ button {
 ========================================= */
 
 :root {
-
   --background: #0e1621;
-
   --sidebar: #17212b;
-
   --header: #17212b;
-
   --hover: #202b36;
-
   --border: #26333f;
-
   --text: #ffffff;
-
   --muted: #8b98a5;
-
   --primary: #3390ec;
-
   --sent: #2b5278;
-
   --received: #182533;
-
 }
-
 
 
 /* =========================================
@@ -85,60 +65,45 @@ button {
 ========================================= */
 
 .auth-page {
-
   width: 100%;
-
   height: 100vh;
+  height: 100dvh;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   background:
-
     radial-gradient(
       circle at top,
       #1c3448,
       #0e1621 55%
     );
-
 }
 
-
 .auth-box {
-
   width: 380px;
-
   max-width: calc(100% - 30px);
 
   padding: 35px;
 
   background: #17212b;
-
   border-radius: 18px;
 
   text-align: center;
 
   box-shadow:
     0 20px 60px rgba(0, 0, 0, .45);
-
 }
 
-
 .auth-logo {
-
   width: 70px;
-
   height: 70px;
 
   margin: 0 auto 18px;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   border-radius: 50%;
@@ -146,72 +111,47 @@ button {
   background: var(--primary);
 
   font-size: 32px;
-
 }
-
 
 .auth-box h1 {
-
   font-size: 24px;
-
   margin-bottom: 7px;
-
 }
-
 
 .auth-subtitle {
-
   color: var(--muted);
-
   margin-bottom: 25px;
-
 }
 
-
 .auth-box input {
-
   width: 100%;
-
   height: 50px;
 
   margin-bottom: 12px;
-
   padding: 0 15px;
 
   border: 1px solid #2b3945;
-
   border-radius: 10px;
 
   outline: none;
 
   background: #101922;
-
   color: white;
 
   font-size: 14px;
-
 }
-
 
 .auth-box input:focus {
-
   border-color: var(--primary);
-
 }
-
 
 .auth-box input::placeholder {
-
   color: #74818d;
-
 }
-
 
 .primary-btn,
 .secondary-btn {
-
   width: 100%;
-
   height: 48px;
 
   border-radius: 10px;
@@ -219,43 +159,26 @@ button {
   margin-top: 7px;
 
   font-size: 15px;
-
   font-weight: bold;
-
 }
-
 
 .primary-btn {
-
   background: var(--primary);
-
   color: white;
-
 }
-
 
 .primary-btn:hover {
-
   background: #2682dc;
-
 }
-
 
 .secondary-btn {
-
   background: #263746;
-
   color: white;
-
 }
-
 
 .secondary-btn:hover {
-
   background: #304655;
-
 }
-
 
 
 /* =========================================
@@ -263,17 +186,16 @@ button {
 ========================================= */
 
 .messenger {
-
   width: 100%;
-
   height: 100vh;
+  height: 100dvh;
 
   display: flex;
 
   background: var(--background);
 
+  overflow: hidden;
 }
-
 
 
 /* =========================================
@@ -281,23 +203,21 @@ button {
 ========================================= */
 
 .sidebar {
-
   width: 380px;
-
   min-width: 380px;
 
   height: 100vh;
+  height: 100dvh;
 
   background: var(--sidebar);
 
   border-left: 1px solid var(--border);
 
   display: flex;
-
   flex-direction: column;
 
+  overflow: hidden;
 }
-
 
 
 /* =========================================
@@ -305,37 +225,27 @@ button {
 ========================================= */
 
 .sidebar-header {
-
   height: 70px;
+  min-height: 70px;
 
   padding: 10px 15px;
 
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
 
   background: var(--header);
 
   border-bottom: 1px solid var(--border);
-
 }
-
 
 .profile-area {
-
   display: flex;
-
   align-items: center;
-
 }
 
-
 .my-avatar {
-
   width: 45px;
-
   height: 45px;
 
   border-radius: 50%;
@@ -343,49 +253,31 @@ button {
   background: #33495c;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   font-size: 20px;
 
   margin-left: 10px;
-
 }
-
 
 .my-info {
-
   display: flex;
-
   flex-direction: column;
-
   gap: 3px;
-
 }
-
 
 .my-info strong {
-
   font-size: 15px;
-
 }
-
 
 .my-info span {
-
   color: #4fc3f7;
-
   font-size: 12px;
-
 }
 
-
 .logout-btn {
-
   width: 40px;
-
   height: 40px;
 
   border-radius: 50%;
@@ -395,18 +287,12 @@ button {
   color: var(--muted);
 
   font-size: 22px;
-
 }
-
 
 .logout-btn:hover {
-
   background: var(--hover);
-
   color: white;
-
 }
-
 
 
 /* =========================================
@@ -414,13 +300,12 @@ button {
 ========================================= */
 
 .search-box {
-
   margin: 10px;
 
   height: 43px;
+  min-height: 43px;
 
   display: flex;
-
   align-items: center;
 
   padding: 0 13px;
@@ -430,27 +315,19 @@ button {
   background: #242f3a;
 
   color: var(--muted);
-
 }
-
 
 .search-box span {
-
   font-size: 15px;
-
   margin-left: 8px;
-
 }
 
-
 .search-box input {
-
   flex: 1;
 
   height: 100%;
 
   border: none;
-
   outline: none;
 
   background: transparent;
@@ -458,16 +335,11 @@ button {
   color: white;
 
   font-size: 14px;
-
 }
-
 
 .search-box input::placeholder {
-
   color: #84919c;
-
 }
-
 
 
 /* =========================================
@@ -475,20 +347,15 @@ button {
 ========================================= */
 
 .add-friend {
-
   display: flex;
 
   gap: 7px;
 
   padding: 0 10px 10px;
-
 }
 
-
 .add-friend input {
-
   flex: 1;
-
   min-width: 0;
 
   height: 40px;
@@ -496,7 +363,6 @@ button {
   padding: 0 12px;
 
   border: none;
-
   outline: none;
 
   border-radius: 8px;
@@ -504,19 +370,13 @@ button {
   background: #242f3a;
 
   color: white;
-
 }
-
 
 .add-friend input::placeholder {
-
   color: #84919c;
-
 }
 
-
 .add-friend button {
-
   width: 42px;
 
   border-radius: 8px;
@@ -526,16 +386,11 @@ button {
   color: white;
 
   font-size: 25px;
-
 }
-
 
 .add-friend button:hover {
-
   background: #2682dc;
-
 }
-
 
 
 /* =========================================
@@ -543,15 +398,12 @@ button {
 ========================================= */
 
 .section-title {
-
   padding: 12px 18px 7px;
 
   color: var(--muted);
 
   font-size: 13px;
-
 }
-
 
 
 /* =========================================
@@ -559,33 +411,25 @@ button {
 ========================================= */
 
 #friends-list {
-
   list-style: none;
 
   overflow-y: auto;
 
   flex: 1;
 
+  min-height: 0;
 }
-
 
 #friends-list::-webkit-scrollbar,
 #messages-list::-webkit-scrollbar {
-
   width: 5px;
-
 }
-
 
 #friends-list::-webkit-scrollbar-thumb,
 #messages-list::-webkit-scrollbar-thumb {
-
   background: #3b4b58;
-
   border-radius: 10px;
-
 }
-
 
 
 /* =========================================
@@ -593,13 +437,11 @@ button {
 ========================================= */
 
 #friends-list li {
-
   min-height: 70px;
 
   padding: 9px 13px;
 
   display: flex;
-
   align-items: center;
 
   cursor: pointer;
@@ -607,31 +449,21 @@ button {
   position: relative;
 
   transition: background .15s;
-
 }
-
 
 #friends-list li:hover {
-
   background: var(--hover);
-
 }
-
 
 #friends-list li.active {
-
   background: #2b5278;
-
 }
-
 
 
 /* AVATAR */
 
 .friend-avatar {
-
   width: 52px;
-
   height: 52px;
 
   min-width: 52px;
@@ -639,9 +471,7 @@ button {
   margin-left: 12px;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   border-radius: 50%;
@@ -649,23 +479,17 @@ button {
   background: #3b5368;
 
   font-size: 22px;
-
 }
-
 
 
 /* NAME */
 
 .friend-name {
-
   display: flex;
-
   flex-direction: column;
 
   font-size: 15px;
-
 }
-
 
 
 /* =========================================
@@ -673,27 +497,24 @@ button {
 ========================================= */
 
 .chat-area {
-
   flex: 1;
 
   min-width: 0;
+  min-height: 0;
 
   height: 100vh;
+  height: 100dvh;
 
   position: relative;
 
   background:
-
     radial-gradient(
       circle at 30% 30%,
       rgba(51, 144, 236, .05),
       transparent 30%
     ),
-
     #0e1621;
-
 }
-
 
 
 /* =========================================
@@ -701,34 +522,26 @@ button {
 ========================================= */
 
 .empty-chat {
-
   width: 100%;
-
   height: 100%;
 
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   flex-direction: column;
 
   color: var(--muted);
-
 }
 
-
 .empty-icon {
-
   width: 85px;
-
   height: 85px;
 
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   border-radius: 50%;
@@ -738,27 +551,19 @@ button {
   font-size: 38px;
 
   margin-bottom: 15px;
-
 }
 
-
 .empty-chat h2 {
-
   color: #dce4ea;
 
   font-size: 21px;
 
   margin-bottom: 7px;
-
 }
-
 
 .empty-chat p {
-
   font-size: 14px;
-
 }
-
 
 
 /* =========================================
@@ -766,17 +571,19 @@ button {
 ========================================= */
 
 .chat-content {
-
   width: 100%;
 
   height: 100%;
+  height: 100dvh;
 
   display: flex;
 
   flex-direction: column;
 
-}
+  min-height: 0;
 
+  overflow: hidden;
+}
 
 
 /* =========================================
@@ -784,9 +591,7 @@ button {
 ========================================= */
 
 .chat-header {
-
   height: 70px;
-
   min-height: 70px;
 
   padding: 9px 18px;
@@ -799,28 +604,21 @@ button {
 
   border-bottom: 1px solid var(--border);
 
+  flex-shrink: 0;
 }
-
 
 .chat-user {
-
   display: flex;
-
   align-items: center;
-
 }
 
-
 .chat-avatar {
-
   width: 48px;
-
   height: 48px;
 
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   border-radius: 50%;
@@ -830,36 +628,25 @@ button {
   font-size: 20px;
 
   margin-left: 12px;
-
 }
 
-
 .chat-user > div:last-child {
-
   display: flex;
 
   flex-direction: column;
 
   gap: 3px;
-
 }
-
 
 .chat-user strong {
-
   font-size: 15px;
-
 }
 
-
 .chat-user span {
-
   color: #4fc3f7;
 
   font-size: 12px;
-
 }
-
 
 
 /* =========================================
@@ -867,11 +654,9 @@ button {
 ========================================= */
 
 .mobile-back {
-
   display: none;
 
   width: 40px;
-
   height: 40px;
 
   margin-left: 5px;
@@ -885,18 +670,12 @@ button {
   font-size: 25px;
 
   align-items: center;
-
   justify-content: center;
-
 }
-
 
 .mobile-back:hover {
-
   background: #263746;
-
 }
-
 
 
 /* =========================================
@@ -904,8 +683,9 @@ button {
 ========================================= */
 
 #messages-list {
-
   flex: 1;
+
+  min-height: 0;
 
   overflow-y: auto;
 
@@ -917,14 +697,15 @@ button {
 
   gap: 6px;
 
+  overscroll-behavior: contain;
 }
 
 
-
-/* MESSAGE */
+/* =========================================
+   MESSAGE
+========================================= */
 
 .msg {
-
   max-width: 65%;
 
   padding: 8px 12px;
@@ -938,15 +719,12 @@ button {
   word-break: break-word;
 
   animation: messageIn .18s ease;
-
 }
-
 
 
 /* SENT */
 
 .msg.sent {
-
   align-self: flex-start;
 
   background: var(--sent);
@@ -954,15 +732,12 @@ button {
   color: white;
 
   border-bottom-left-radius: 4px;
-
 }
-
 
 
 /* RECEIVED */
 
 .msg.received {
-
   align-self: flex-end;
 
   background: var(--received);
@@ -970,9 +745,7 @@ button {
   color: #e8edf0;
 
   border-bottom-right-radius: 4px;
-
 }
-
 
 
 /* =========================================
@@ -980,8 +753,12 @@ button {
 ========================================= */
 
 .message-input {
+  width: 100%;
 
   min-height: 65px;
+  height: 65px;
+
+  flex-shrink: 0;
 
   padding: 10px 15px;
 
@@ -993,11 +770,12 @@ button {
 
   border-top: 1px solid var(--border);
 
+  position: relative;
+
+  z-index: 10;
 }
 
-
 .message-input input {
-
   flex: 1;
 
   min-width: 0;
@@ -1017,22 +795,17 @@ button {
   color: white;
 
   font-size: 14px;
-
 }
-
 
 .message-input input::placeholder {
-
   color: #84919c;
-
 }
 
-
 .message-input button {
-
   width: 48px;
-
   height: 45px;
+
+  flex-shrink: 0;
 
   border-radius: 50%;
 
@@ -1045,18 +818,12 @@ button {
   display: flex;
 
   align-items: center;
-
   justify-content: center;
-
 }
-
 
 .message-input button:hover {
-
   background: #2682dc;
-
 }
-
 
 
 /* =========================================
@@ -1064,25 +831,16 @@ button {
 ========================================= */
 
 @keyframes messageIn {
-
   from {
-
     opacity: 0;
-
     transform: translateY(5px);
-
   }
 
   to {
-
     opacity: 1;
-
     transform: translateY(0);
-
   }
-
 }
-
 
 
 /* =========================================
@@ -1091,168 +849,193 @@ button {
 
 @media (max-width: 700px) {
 
+  html,
+  body {
+    width: 100%;
+    height: 100%;
 
-  /* MAIN */
+    overflow: hidden;
+  }
 
   .messenger {
-
     width: 100%;
 
     height: 100vh;
+    height: 100dvh;
 
     position: relative;
 
     overflow: hidden;
-
   }
-
 
 
   /* SIDEBAR */
 
   .sidebar {
-
     width: 100%;
-
     min-width: 100%;
 
     height: 100vh;
-
+    height: 100dvh;
   }
 
 
-
-  /* CHAT HIDDEN INITIALLY */
+  /* CHAT */
 
   .chat-area {
-
     display: none;
 
     position: fixed;
 
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
     width: 100%;
 
     height: 100vh;
+    height: 100dvh;
+
+    min-height: 0;
 
     z-index: 100;
 
-  }
+    overflow: hidden;
 
+    background: #0e1621;
+  }
 
 
   /* CHAT OPEN */
 
   .messenger.mobile-chat-open .sidebar {
-
     display: none;
-
   }
-
 
   .messenger.mobile-chat-open .chat-area {
-
-    display: block;
-
+    display: flex;
   }
 
+
+  /* CHAT CONTENT */
+
+  .chat-content {
+    width: 100%;
+
+    height: 100vh;
+    height: 100dvh;
+
+    min-height: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
+  }
+
+
+  /* HEADER */
+
+  .chat-header {
+    width: 100%;
+
+    height: 60px;
+    min-height: 60px;
+
+    padding: 7px 10px;
+
+    flex-shrink: 0;
+  }
 
 
   /* BACK BUTTON */
 
   .mobile-back {
-
     display: flex;
 
+    flex-shrink: 0;
   }
-
-
-
-  /* CHAT HEADER */
-
-  .chat-header {
-
-    height: 60px;
-
-    min-height: 60px;
-
-    padding: 7px 10px;
-
-  }
-
 
 
   /* MESSAGES */
 
   #messages-list {
+    flex: 1;
+
+    min-height: 0;
+
+    width: 100%;
 
     padding: 15px 12px;
 
-  }
+    overflow-y: auto;
 
+    -webkit-overflow-scrolling: touch;
+  }
 
 
   .msg {
-
     max-width: 82%;
 
     font-size: 14px;
-
   }
-
 
 
   /* MESSAGE INPUT */
 
   .message-input {
+    display: flex !important;
 
+    width: 100%;
+
+    height: 62px;
     min-height: 62px;
+
+    flex-shrink: 0;
 
     padding: 8px 10px;
 
-  }
+    background: var(--header);
 
+    border-top: 1px solid var(--border);
+
+    z-index: 999;
+  }
 
 
   .message-input input {
+    width: 100%;
 
     height: 45px;
 
+    font-size: 14px;
   }
-
 
 
   .message-input button {
-
     width: 45px;
-
     height: 45px;
 
+    min-width: 45px;
   }
-
 
 
   /* FRIENDS */
 
   #friends-list li {
-
     min-height: 70px;
-
   }
-
 
 
   /* SIDEBAR HEADER */
 
   .sidebar-header {
-
     height: 65px;
-
+    min-height: 65px;
   }
-
 }
-
 
 
 /* =========================================
@@ -1261,39 +1044,51 @@ button {
 
 @media (max-width: 400px) {
 
-
   .auth-box {
-
     padding: 25px 20px;
-
   }
-
 
   .search-box {
-
     margin: 8px;
-
   }
-
 
   .add-friend {
-
     padding: 0 8px 8px;
-
   }
-
 
   #messages-list {
-
     padding: 12px 8px;
-
   }
-
 
   .msg {
-
     max-width: 88%;
-
   }
 
+  .message-input {
+    padding-left: 7px;
+    padding-right: 7px;
+
+    gap: 7px;
+  }
+}
+
+
+/* =========================================
+   MOBILE KEYBOARD FIX
+========================================= */
+
+@supports (height: 100dvh) {
+
+  @media (max-width: 700px) {
+
+    .chat-area,
+    .chat-content,
+    .messenger {
+      height: 100dvh;
+    }
+
+    .sidebar {
+      height: 100dvh;
+    }
+  }
 }
